@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.blakey.monte_carlo.model.Controller">
+   <children>
+      <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+         <children>
+            <MenuBar prefHeight="25.0" prefWidth="603.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </HBox>
+      <BorderPane VBox.vgrow="ALWAYS">
+         <bottom>
+            <HBox prefHeight="281.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox prefHeight="372.0" prefWidth="170.0">
+                           <children>
+                              <HBox prefHeight="26.0" prefWidth="170.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#setPiSimVisible" prefHeight="25.0" prefWidth="174.0" text="Pi Approximation" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <VBox fx:id="MainVBox">
+                     <children>
+                        <HBox prefHeight="28.0" prefWidth="432.0">
+                           <children>
+                              <TextField fx:id="numThreadsInput" promptText="Number of Threads" />
+                              <Button mnemonicParsing="false" onAction="#setNumThreadsClicked" text="Set" />
+                              <Label prefHeight="17.0" prefWidth="120.0" text="Number of Threads: " />
+                              <Text fx:id="currentNumThreads" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="69.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="30.0" prefWidth="311.0">
+                           <children>
+                              <TextField fx:id="numTrialsInput" promptText="Number of Trials" />
+                              <Button mnemonicParsing="false" onAction="#setNumTrialsClicked" text="Set" />
+                              <Label prefHeight="17.0" prefWidth="120.0" text="Number of Trials: " />
+                              <Text fx:id="currentNumTrials" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="71.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="28.0" prefWidth="311.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#simulateClicked" prefHeight="25.0" prefWidth="85.0" text="Simulate" />
+                           </children>
+                        </HBox>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="209.13671875" />
+                        <HBox>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Value of Pi:" wrappingWidth="70.13671875" />
+                              <Text fx:id="valueOfPi" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="46.0" prefWidth="415.0">
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="53.0" text="Progress" />
+                                          <ProgressBar prefWidth="200.0" progress="0.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <Text fx:id="StatusLabel" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="414.13671875" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
+                     <font>
+                        <Font name="Britannic Bold" size="37.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</VBox>
