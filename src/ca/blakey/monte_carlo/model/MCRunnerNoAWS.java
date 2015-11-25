@@ -37,14 +37,11 @@ public class MCRunnerNoAWS {
 	public void runMC() throws NoSuchAlgorithmException, InterruptedException {
 		Thread[] threads = new Thread[numThreads];
 		MonteCarloSim[] mcs = new MonteCarloSim[numThreads];
-
 		this.statistics = new Statistics();
 		for (int i = 0; i < numThreads; i++) {
-			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, 2);
+			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars);
 			threads[i] = new Thread(mcs[i]);
 			threads[i].start();
-
-
 		}
 
 		for (int i = 0; i < numThreads; i++) {

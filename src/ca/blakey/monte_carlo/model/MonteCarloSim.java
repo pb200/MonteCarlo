@@ -77,7 +77,13 @@ public class MonteCarloSim implements Runnable {
 			}
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
 			TrialRunner tRunner = new TrialRunner(this.trials, this.numVars, this.seed);
-			NVarFunction nVarF = new NVarFunction();
+			Measure nVarF;
+			if (true){
+				nVarF = new DiceRoll();
+			}
+			else{
+				nVarF = new NVarFunction();
+			}
 			final long startTime = System.currentTimeMillis();
 			tRunner.runNVar(nVarF);
 			for (int j = 0; j < tRunner.getNumVars(); j++) {

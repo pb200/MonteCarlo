@@ -1,8 +1,9 @@
 package ca.blakey.monte_carlo.model;
 
 //Copyright (c) <2015> <Phillip Blakey>
-public class NVarFunction {
-	public double Check(double [] input){
+public class NVarFunction extends Measure{
+	@Override
+	public double Call(double [] input){
 		double y = 2*input[1]-1;	// The number is generated between 0-1 so this makes it between -1,1.
 		double x = 2*input[0]-1;
 		//System.out.println("x: "+x + " y: "+y);
@@ -13,4 +14,8 @@ public class NVarFunction {
 			return 0.0;
 		}
 	}
+
+
+
+
 }

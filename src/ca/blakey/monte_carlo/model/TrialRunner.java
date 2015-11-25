@@ -78,7 +78,7 @@ public class TrialRunner {
 		System.out.println(this);
 	}
 
-	public void runNVar(NVarFunction nVarF) {
+	public void runNVar(Measure nVarF) {
 		// TODO (phil) Calculate statistics on output value
 		RandomNumGen numGen = new RandomNumGen(this.getSeed());
 		double[] randomVars = new double[this.getNumVars()];
@@ -88,7 +88,7 @@ public class TrialRunner {
 				randomVars[j] = randomVar;
 				this.trialStats[j].run(randomVars[j]);
 			}
-			double nVarValue = nVarF.Check(randomVars);
+			double nVarValue = nVarF.Call(randomVars);
 			this.incrementSuccesses(nVarValue);
 
 		}
