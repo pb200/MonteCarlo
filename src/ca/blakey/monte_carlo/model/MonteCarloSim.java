@@ -18,9 +18,11 @@ public class MonteCarloSim implements Runnable {
 	private double[] mean;
 	private double endTime = 0;
 	private double successes = 0;
+	private String simulationType;
 
-	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn) {
+	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn, String simulationTypeIn) {
 		this.seed = seedIn;
+		this.simulationType = simulationTypeIn;
 		this.trials = trialsIn;
 		this.numVars = numVarsIn;
 		standardDeviation = new double[numVarsIn];
@@ -78,7 +80,7 @@ public class MonteCarloSim implements Runnable {
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
 			TrialRunner tRunner = new TrialRunner(this.trials, this.numVars, this.seed);
 			Measure nVarF;
-			if (true){
+			if (simulationType.compareTo("diceRoll") ==0){
 				nVarF = new DiceRoll();
 			}
 			else{

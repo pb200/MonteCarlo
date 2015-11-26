@@ -39,7 +39,7 @@ public class MCRunnerNoAWS {
 		MonteCarloSim[] mcs = new MonteCarloSim[numThreads];
 		this.statistics = new Statistics();
 		for (int i = 0; i < numThreads; i++) {
-			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars);
+			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars, "diceRoll");
 			threads[i] = new Thread(mcs[i]);
 			threads[i].start();
 		}

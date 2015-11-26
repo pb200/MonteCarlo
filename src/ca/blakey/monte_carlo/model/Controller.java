@@ -21,16 +21,31 @@ public class Controller {
 	@FXML private Text currentNumThreads;
 	@FXML private Text currentNumTrials;
 	@FXML private Text valueOfPi;
-	@FXML private VBox MainVBox;
+	@FXML private VBox PiVBox;
+	@FXML private VBox DiceVBox;
 	@FXML private Text StatusLabel;
-	private int numTimesVBoxVisibleClicked = 0;
+	private int numTimesPiVBoxVisibleClicked = 0;
+	private int numTimesDiceVBoxVisibleClicked = 0;
 
 	public void setPiSimVisible(){
-		numTimesVBoxVisibleClicked++;
-		if (this.numTimesVBoxVisibleClicked % 2 == 0)
-			MainVBox.setVisible(false);
+		this.numTimesDiceVBoxVisibleClicked++;
+		DiceVBox.setVisible(false);
+		numTimesPiVBoxVisibleClicked++;
+		if (this.numTimesPiVBoxVisibleClicked % 2 == 0)
+			PiVBox.setVisible(false);
 		else
-			MainVBox.setVisible(true);
+			PiVBox.setVisible(true);
+	}
+	public void setDiceSimVisible(){
+		numTimesPiVBoxVisibleClicked++;
+		PiVBox.setVisible(false);
+		numTimesDiceVBoxVisibleClicked++;
+		if(this.numTimesDiceVBoxVisibleClicked %2 == 0){
+			DiceVBox.setVisible(true);
+		}
+		else{
+			DiceVBox.setVisible(true);
+		}
 	}
 	public void setNumThreadsClicked(){
 		try{
@@ -70,7 +85,7 @@ public class Controller {
 			successes = successes + (tempSuccesses);
 		}
 		*/
-		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, 2);
+		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, 50);
 
 		mCRunner.runMC();
 
@@ -84,7 +99,8 @@ public class Controller {
 		}
 
 		pi = 4*(successes)/(numTrials*numThreads);
-		valueOfPi.setText(Double.toString(pi));
+		double sum = successes/(numTrials*numThreads);
+		valueOfPi.setText(Double.toString(sum));
 		 StatusLabel.setText("Finished");
 
 	}
