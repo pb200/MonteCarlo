@@ -24,8 +24,18 @@ public class Controller {
 	@FXML private VBox PiVBox;
 	@FXML private VBox DiceVBox;
 	@FXML private Text StatusLabel;
+	@FXML private TextField numTrialsInDice;
+	@FXML private TextField numThreadsInDice;
+	@FXML private TextField numDiceInDice;
 	private int numTimesPiVBoxVisibleClicked = 0;
 	private int numTimesDiceVBoxVisibleClicked = 0;
+	@FXML private Text numTrialsDice;
+	@FXML private Text numThreadsDice;
+	@FXML private Text numDiceDice;
+	@FXML private Text avgSum;
+	private int numDice;
+	@FXML private Text statusLabelDice;
+	
 
 	public void setPiSimVisible(){
 		this.numTimesDiceVBoxVisibleClicked++;
@@ -85,7 +95,7 @@ public class Controller {
 			successes = successes + (tempSuccesses);
 		}
 		*/
-		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, 50);
+		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, 50, "piSimulation");
 
 		mCRunner.runMC();
 
@@ -102,6 +112,59 @@ public class Controller {
 		double sum = successes/(numTrials*numThreads);
 		valueOfPi.setText(Double.toString(sum));
 		 StatusLabel.setText("Finished");
+
+	}
+	public void setNumThreadsClickedDice(){
+		try{
+		numThreads = Integer.parseInt(numThreadsInDice.getText());
+		numThreadsDice.setText(numThreadsInDice.getText());
+		}
+		catch(NumberFormatException e){
+			 statusLabelDice.setText("Please enter an integer");
+			 System.out.println("You did not enter an integer");
+		}
+		System.out.println(numThreads);
+	}
+	public void setNumTrialsClickedDice(){
+		try{
+		numTrials = Integer.parseInt(numTrialsInDice.getText());
+		numTrialsDice.setText(numTrialsInDice.getText());
+		System.out.println(numTrials);
+		}
+		catch(NumberFormatException e){
+			 statusLabelDice.setText("Please enter an integer");
+			 statusLabelDice.setFill(Color.FIREBRICK);
+			 System.out.println("You did not enter an integer");
+		}
+	}
+	public void setNumDiceClickedDice(){
+		try{
+		numDice = Integer.parseInt(numDiceInDice.getText());
+		numDiceDice.setText(numDiceInDice.getText());
+		}
+		catch(NumberFormatException e){
+			 statusLabelDice.setText("Please enter an integer");
+			 statusLabelDice.setFill(Color.FIREBRICK);
+			 System.out.println("You did not enter an integer");
+		}
+	}
+	public void simulateDiceClicked() throws NoSuchAlgorithmException, InterruptedException{
+		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, numDice, "diceRoll");
+
+		mCRunner.runMC();
+		double successes = 0;
+
+		ResultStore resultStore = mCRunner.getResultStore();
+		for(int i = 0; i <mCRunner.getNumThreads(); i++){
+			long seed = mCRunner.getSeedArray().getSeed(i);
+			Result result = resultStore.Get(seed);
+
+			double tempSuccesses = result.getSuccesses();
+			successes = successes + (tempSuccesses);
+		}
+		double sum = successes/(numTrials*numThreads);
+		avgSum.setText(Double.toString(sum));
+		 statusLabelDice.setText("Finished");
 
 	}
 }

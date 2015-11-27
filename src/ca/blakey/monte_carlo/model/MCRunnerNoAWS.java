@@ -9,14 +9,16 @@ public class MCRunnerNoAWS {
 	private int numVars = 0;
 	private int numTrials = 0;
 	private Statistics statistics;
+	private String simType;
 	GenerateUUID seedArray;
 	ResultStore resultStore;
 
-	public MCRunnerNoAWS(int numThreadsIn, int numTrialsIn, int numVarsIn) throws NoSuchAlgorithmException {
+	public MCRunnerNoAWS(int numThreadsIn, int numTrialsIn, int numVarsIn, String simTypeIn) throws NoSuchAlgorithmException {
 		this.numThreads = numThreadsIn;
 		this.numVars = numVarsIn;
 		this.numTrials = numTrialsIn;
 		seedArray = new GenerateUUID(numThreadsIn);
+		this.simType = simTypeIn;
 	}
 
 	public int getNumThreads() {
@@ -39,7 +41,7 @@ public class MCRunnerNoAWS {
 		MonteCarloSim[] mcs = new MonteCarloSim[numThreads];
 		this.statistics = new Statistics();
 		for (int i = 0; i < numThreads; i++) {
-			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars, "diceRoll");
+			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars, this.simType);
 			threads[i] = new Thread(mcs[i]);
 			threads[i].start();
 		}

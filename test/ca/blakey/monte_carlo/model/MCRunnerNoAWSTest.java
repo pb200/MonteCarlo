@@ -16,7 +16,7 @@ public class MCRunnerNoAWSTest {
 		int numVariables = 2;
 		MCRunnerNoAWS mCRunner;
 		try {
-			mCRunner = new MCRunnerNoAWS(numThreads, numTrials, numVariables);
+			mCRunner = new MCRunnerNoAWS(numThreads, numTrials, numVariables, "DiceRoll");
 			mCRunner.runMC();
 
 			ResultStore resultStore = mCRunner.getResultStore();
