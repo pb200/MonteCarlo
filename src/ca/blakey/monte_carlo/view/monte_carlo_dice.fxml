@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.blakey.monte_carlo.model.Controller_Dice">
+   <children>
+      <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+         <children>
+            <MenuBar prefHeight="25.0" prefWidth="603.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </HBox>
+      <BorderPane VBox.vgrow="ALWAYS">
+         <bottom>
+            <HBox prefHeight="281.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <VBox fx:id="DiceVBox" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="numTrialsInDice" />
+                                    <Button mnemonicParsing="false" onAction="#setNumTrialsClickedDice" text="Set" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Trials: " />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="numTrialsDice" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="numThreadsInDice" />
+                                    <Button mnemonicParsing="false" onAction="#setNumThreadsClickedDice" text="Set" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Threads: " />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="numThreadsDice" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <TextField fx:id="numDiceInDice" />
+                                    <Button mnemonicParsing="false" onAction="#setNumDiceClickedDice" text="Set" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Dice: " wrappingWidth="94.13671875" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="numDiceDice" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <Button mnemonicParsing="false" onAction="#simulateDiceClicked" text="Simulate" />
+                              <HBox>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Average Sum: " wrappingWidth="81.13671875" />
+                                    <Text fx:id="avgSum" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <Text fx:id="statusLabelDice" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="404.13671875" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
+                     <font>
+                        <Font name="Britannic Bold" size="37.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</VBox>
