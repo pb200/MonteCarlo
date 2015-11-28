@@ -27,8 +27,8 @@ public class Controller {
 	@FXML private TextField numTrialsInDice;
 	@FXML private TextField numThreadsInDice;
 	@FXML private TextField numDiceInDice;
-	private int numTimesPiVBoxVisibleClicked = 0;
-	private int numTimesDiceVBoxVisibleClicked = 0;
+	private int numTimesPiVBoxVisibleClicked = 1;
+	private int numTimesDiceVBoxVisibleClicked = 1;
 	@FXML private Text numTrialsDice;
 	@FXML private Text numThreadsDice;
 	@FXML private Text numDiceDice;
@@ -54,7 +54,7 @@ public class Controller {
 			DiceVBox.setVisible(true);
 		}
 		else{
-			DiceVBox.setVisible(true);
+			DiceVBox.setVisible(false);
 		}
 	}
 	public void setNumThreadsClicked(){
