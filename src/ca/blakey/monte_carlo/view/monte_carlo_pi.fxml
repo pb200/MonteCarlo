@@ -42,23 +42,19 @@
                            <children>
                               <HBox prefHeight="28.0" prefWidth="432.0">
                                  <children>
+                                    <Label prefHeight="25.0" prefWidth="120.0" text="Number of Threads: " />
                                     <TextField fx:id="numThreadsInput" promptText="Number of Threads" />
-                                    <Button mnemonicParsing="false" onAction="#setNumThreadsClicked" text="Set" />
-                                    <Label prefHeight="17.0" prefWidth="120.0" text="Number of Threads: " />
-                                    <Text fx:id="currentNumThreads" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="69.13671875" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="30.0" prefWidth="311.0">
                                  <children>
+                                    <Label prefHeight="24.0" prefWidth="120.0" text="Number of Trials: " />
                                     <TextField fx:id="numTrialsInput" promptText="Number of Trials" />
-                                    <Button mnemonicParsing="false" onAction="#setNumTrialsClicked" text="Set" />
-                                    <Label prefHeight="17.0" prefWidth="120.0" text="Number of Trials: " />
-                                    <Text fx:id="currentNumTrials" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="71.13671875" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="28.0" prefWidth="311.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#simulateClicked" prefHeight="25.0" prefWidth="85.0" text="Simulate" />
+                                    <Button mnemonicParsing="false" onAction="#simulateClicked" prefHeight="25.0" prefWidth="102.0" text="Simulate" />
                                  </children>
                               </HBox>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="209.13671875" />
@@ -75,7 +71,7 @@
                                           <HBox>
                                              <children>
                                                 <Label prefHeight="17.0" prefWidth="53.0" text="Progress" />
-                                                <ProgressBar prefWidth="200.0" progress="0.0" />
+                                                <ProgressBar fx:id="piProgressBar" prefWidth="200.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                           <HBox>
@@ -83,6 +79,7 @@
                                                 <Text fx:id="StatusLabel" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="414.13671875" />
                                              </children>
                                           </HBox>
+                                          <Button mnemonicParsing="false" onAction="#backToMain" prefHeight="25.0" prefWidth="102.0" text="Return Home" />
                                        </children>
                                     </VBox>
                                  </children>

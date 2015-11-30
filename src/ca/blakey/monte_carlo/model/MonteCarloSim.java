@@ -19,7 +19,7 @@ public class MonteCarloSim implements Runnable {
 	private double endTime = 0;
 	private double successes = 0;
 	private String simulationType;
-
+	private Measure nVarF;
 	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn, String simulationTypeIn) {
 		this.seed = seedIn;
 		this.simulationType = simulationTypeIn;
@@ -27,7 +27,14 @@ public class MonteCarloSim implements Runnable {
 		this.numVars = numVarsIn;
 		standardDeviation = new double[numVarsIn];
 		varience = new double[numVarsIn];
-		mean = new double[numVarsIn];
+		mean = new double[numVarsIn];		
+		
+		if (simulationType.compareTo("diceRoll") ==0){
+			nVarF = new DiceRoll();
+		}
+		else{
+			nVarF = new PiRoll();
+		}
 	}
 	public double[] getStdArray() {
 		return this.standardDeviation;
@@ -79,13 +86,7 @@ public class MonteCarloSim implements Runnable {
 			}
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
 			TrialRunner tRunner = new TrialRunner(this.trials, this.numVars, this.seed);
-			Measure nVarF;
-			if (simulationType.compareTo("diceRoll") ==0){
-				nVarF = new DiceRoll();
-			}
-			else{
-				nVarF = new NVarFunction();
-			}
+
 			final long startTime = System.currentTimeMillis();
 			tRunner.runNVar(nVarF);
 			for (int j = 0; j < tRunner.getNumVars(); j++) {
@@ -99,7 +100,7 @@ public class MonteCarloSim implements Runnable {
 			final long endTime = System.currentTimeMillis();
 			this.totalExecutionTime = endTime - startTime;
 			this.endTime = endTime;
-			this.successes = tRunner.getSuccesses();
+			this.successes = nVarF.postCall(tRunner.getSuccesses());
 
 		}
 	}

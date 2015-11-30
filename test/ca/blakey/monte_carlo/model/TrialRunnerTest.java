@@ -12,7 +12,7 @@ public class TrialRunnerTest {
 		int numVarsIn=2;
 		long seedIn = 1;
 		TrialRunner trialRunner = new TrialRunner(trialsIn,numVarsIn,seedIn);
-		NVarFunction nVarF = new NVarFunction();
+		PiRoll nVarF = new PiRoll();
 		trialRunner.runNVar(nVarF);
 		assertEquals(2.0,trialRunner.getNumVars(),  0.0);
 		assertEquals(1.0,trialRunner.getSeed(), 0.0);

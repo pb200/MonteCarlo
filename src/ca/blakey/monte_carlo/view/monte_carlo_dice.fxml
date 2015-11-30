@@ -42,27 +42,24 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <TextField fx:id="numTrialsInDice" />
-                                    <Button mnemonicParsing="false" onAction="#setNumTrialsClickedDice" text="Set" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Trials: " />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Trials: " wrappingWidth="94.32421875" />
+                                    <TextField fx:id="numTrialsInDice" onAction="#setNumTrialsClickedDice" onInputMethodTextChanged="#setNumTrialsClickedDice" promptText="Number of Trials" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" />
                                     <Text fx:id="numTrialsDice" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
                               </HBox>
                               <HBox>
                                  <children>
-                                    <TextField fx:id="numThreadsInDice" />
-                                    <Button mnemonicParsing="false" onAction="#setNumThreadsClickedDice" text="Set" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Threads: " />
+                                    <TextField fx:id="numThreadsInDice" onAction="#setNumThreadsClickedDice" promptText="Number of Threads" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" />
                                     <Text fx:id="numThreadsDice" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
                               </HBox>
                               <HBox>
                                  <children>
-                                    <TextField fx:id="numDiceInDice" />
-                                    <Button mnemonicParsing="false" onAction="#setNumDiceClickedDice" text="Set" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Dice: " wrappingWidth="94.13671875" />
+                                    <TextField fx:id="numDiceInDice" onAction="#setNumDiceClickedDice" promptText="Number of Dice" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" />
                                     <Text fx:id="numDiceDice" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
@@ -75,6 +72,8 @@
                                  </children>
                               </HBox>
                               <Text fx:id="statusLabelDice" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="404.13671875" />
+                              <ProgressBar fx:id="diceProgressBar" prefWidth="200.0" progress="0.0" />
+                              <Button mnemonicParsing="false" onAction="#backToMain" text="Return Home" />
                            </children>
                         </VBox>
                      </children>

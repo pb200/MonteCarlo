@@ -10,14 +10,14 @@ import org.junit.Test;
 public class MCRunnerNoAWSTest {
 
 	@Test
-	public void Basictest() {
+	public void Basictest() throws Exception {
 		int numThreads = 1;
 		int numTrials = 1;
 		int numVariables = 2;
 		MCRunnerNoAWS mCRunner;
 		try {
 			mCRunner = new MCRunnerNoAWS(numThreads, numTrials, numVariables, "DiceRoll");
-			mCRunner.runMC();
+			mCRunner.call();
 
 			ResultStore resultStore = mCRunner.getResultStore();
 			double successes = 0;

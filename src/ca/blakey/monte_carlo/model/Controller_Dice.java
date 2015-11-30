@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,18 +31,18 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	@FXML private Text numDiceDice;
 	@FXML private Text avgSum;
 	@FXML private Text statusLabelDice;
-	
+	@FXML private ProgressBar diceProgressBar;
 	  public void setScreenParent(ScreensController screenParent){
 	        myController = screenParent;
 	    }
 	  @FXML
 			public void backToMain(){
-				  myController.setScreen(Main.screen2ID);
+				  myController.setScreen(Main.mainPageName);
 			}
 	public void setNumThreadsClickedDice(){
 		try{
 		numThreads = Integer.parseInt(numThreadsInDice.getText());
-		numThreadsDice.setText(numThreadsInDice.getText());
+	//	numThreadsDice.setText(numThreadsInDice.getText());
 		}
 		catch(NumberFormatException e){
 			 statusLabelDice.setText("Please enter an integer");
@@ -52,7 +53,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	public void setNumTrialsClickedDice(){
 		try{
 		numTrials = Integer.parseInt(numTrialsInDice.getText());
-		numTrialsDice.setText(numTrialsInDice.getText());
+		//numTrialsDice.setText(numTrialsInDice.getText());
 		System.out.println(numTrials);
 		}
 		catch(NumberFormatException e){
@@ -64,7 +65,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	public void setNumDiceClickedDice(){
 		try{
 		numDice = Integer.parseInt(numDiceInDice.getText());
-		numDiceDice.setText(numDiceInDice.getText());
+		//numDiceDice.setText(numDiceInDice.getText());
 		}
 		catch(NumberFormatException e){
 			 statusLabelDice.setText("Please enter an integer");
@@ -72,24 +73,25 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 			 System.out.println("You did not enter an integer");
 		}
 	}
-	public void simulateDiceClicked() throws NoSuchAlgorithmException, InterruptedException{
+	public void simulateDiceClicked() throws Exception{
+		try {
+			setNumTrialsClickedDice();
+			setNumThreadsClickedDice();
+			setNumDiceClickedDice();
+			}
+			catch (NumberFormatException e){
+				
+				return;
+			}
+		
 		MCRunnerNoAWS mCRunner= new MCRunnerNoAWS(numThreads, numTrials, numDice, "diceRoll");
-
-		mCRunner.runMC();
-		double successes = 0;
-
-		ResultStore resultStore = mCRunner.getResultStore();
-		for(int i = 0; i <mCRunner.getNumThreads(); i++){
-			long seed = mCRunner.getSeedArray().getSeed(i);
-			Result result = resultStore.Get(seed);
-
-			double tempSuccesses = result.getSuccesses();
-			successes = successes + (tempSuccesses);
-		}
-		double sum = successes/(numTrials*numThreads);
-		avgSum.setText(Double.toString(sum));
-		 statusLabelDice.setText("Finished");
-
+		diceProgressBar.progressProperty().bind(mCRunner.progressProperty());
+		avgSum.textProperty().bind(mCRunner.valueProperty().asString());
+		Thread workingThread = new Thread(mCRunner);
+		workingThread.setDaemon(true);
+		workingThread.start();
+			
+		statusLabelDice.setText("Finished");
 	}
 
 	@Override

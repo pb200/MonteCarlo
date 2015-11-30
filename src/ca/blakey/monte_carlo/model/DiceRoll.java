@@ -30,4 +30,9 @@ public class DiceRoll extends Measure{
 		}
 		return sum;
 	}
+
+	@Override
+	double postCall(double input) {
+		return input;
+	}
 }
