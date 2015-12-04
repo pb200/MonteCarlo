@@ -1,5 +1,5 @@
 package ca.blakey.monte_carlo.model;
-
+//Copyright (c) <2015> <Phillip Blakey>
 import ca.blakey.monte_carlo.model.ScreensController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

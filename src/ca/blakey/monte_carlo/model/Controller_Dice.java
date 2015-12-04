@@ -1,5 +1,5 @@
 package ca.blakey.monte_carlo.model;
-
+//Copyright (c) <2015> <Phillip Blakey>
 import java.awt.Button;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;

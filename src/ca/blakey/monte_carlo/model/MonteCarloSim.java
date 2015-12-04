@@ -9,6 +9,7 @@ import java.util.Timer;
 public class MonteCarloSim implements Runnable {
 	static Timer timer = new Timer();
 	static int seconds = 0;
+	
 	private long seed = 0;
 	private int trials = 0;
 	private int numVars = 0;
@@ -20,7 +21,9 @@ public class MonteCarloSim implements Runnable {
 	private double successes = 0;
 	private String simulationType;
 	private Measure nVarF;
+	private TrialRunner tRunner;
 	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn, String simulationTypeIn) {
+		tRunner = new TrialRunner(trialsIn, numVarsIn, seedIn);
 		this.seed = seedIn;
 		this.simulationType = simulationTypeIn;
 		this.trials = trialsIn;
@@ -85,8 +88,6 @@ public class MonteCarloSim implements Runnable {
 				return;
 			}
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
-			TrialRunner tRunner = new TrialRunner(this.trials, this.numVars, this.seed);
-
 			final long startTime = System.currentTimeMillis();
 			tRunner.runNVar(nVarF);
 			for (int j = 0; j < tRunner.getNumVars(); j++) {

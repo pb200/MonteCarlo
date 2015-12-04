@@ -1,5 +1,5 @@
 package ca.blakey.monte_carlo.model;
-
+//Copyright (c) <2015> <Phillip Blakey>
 public class DiceRoll extends Measure{
 
 	@Override

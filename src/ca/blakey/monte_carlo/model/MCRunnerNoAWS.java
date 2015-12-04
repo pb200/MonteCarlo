@@ -51,7 +51,7 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 		int numSteps = 10;
 		int trialsPerStep = numTrials/10;
 		for (int i = 0; i < numThreads; i++) {
-			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), numTrials, this.numVars, this.simType);
+			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), trialsPerStep, this.numVars, this.simType);
 		}
 		for (int stepNumber = 0; stepNumber < numSteps; stepNumber++) {
 			for (int i = 0; i < numThreads; i++) {
