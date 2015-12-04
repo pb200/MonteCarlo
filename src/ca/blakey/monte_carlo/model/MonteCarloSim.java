@@ -22,8 +22,12 @@ public class MonteCarloSim implements Runnable {
 	private String simulationType;
 	private Measure nVarF;
 	private TrialRunner tRunner;
+	private Statistics[] trialStats;
+	private double sum = 0;
+	
+	
 	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn, String simulationTypeIn) {
-		tRunner = new TrialRunner(trialsIn, numVarsIn, seedIn);
+	
 		this.seed = seedIn;
 		this.simulationType = simulationTypeIn;
 		this.trials = trialsIn;
@@ -37,6 +41,12 @@ public class MonteCarloSim implements Runnable {
 		}
 		else{
 			nVarF = new PiRoll();
+		}
+		tRunner = new TrialRunner(trialsIn, numVarsIn, seedIn,nVarF);
+		
+		trialStats = new Statistics[numVars];
+		for (int j = 0; j < numVars; j++) {
+			trialStats[j] = new Statistics();
 		}
 	}
 	public double[] getStdArray() {
@@ -79,6 +89,10 @@ public class MonteCarloSim implements Runnable {
 		return this.trials;
 	}
 
+	private void incrementSum(double input) { 
+		this.sum = sum + input;
+	}
+	
 	public void run() {
 		{
 			try {
@@ -89,7 +103,21 @@ public class MonteCarloSim implements Runnable {
 			}
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
 			final long startTime = System.currentTimeMillis();
-			tRunner.runNVar(nVarF);
+			
+			RandomNumGen numGen = new RandomNumGen(this.seed);
+			double[] randomVars = new double[this.numVars];
+			for (int i = 1; i < this.trials + 1; i++) {
+				for (int j = 0; j < this.numVars; j++) {
+					double randomVar = numGen.getRandomNum();
+					randomVars[j] = randomVar;
+					this.trialStats[j].run(randomVars[j]);
+				}
+				double nVarValue = nVarF.Call(randomVars);
+				this.incrementSum(nVarValue);
+				System.out.println("Sum: " + sum);
+			}
+
+			/*
 			for (int j = 0; j < tRunner.getNumVars(); j++) {
 				tRunner.getTrialStat(j).calculuateStdDev();
 				tRunner.getTrialStat(j).calculateVariance();
@@ -98,10 +126,12 @@ public class MonteCarloSim implements Runnable {
 				this.varience[j] = tRunner.getTrialStat(j).getVariance();
 				this.mean[j] = tRunner.getTrialStat(j).getMean();
 			}
+			*/ 
+			
 			final long endTime = System.currentTimeMillis();
 			this.totalExecutionTime = endTime - startTime;
 			this.endTime = endTime;
-			this.successes = nVarF.postCall(tRunner.getSuccesses());
+			this.successes = nVarF.postCall(this.sum);
 
 		}
 	}

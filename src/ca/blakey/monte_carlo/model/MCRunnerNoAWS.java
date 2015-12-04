@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
+ 
+
 public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	private int numThreads = 0;
 	private int numVars = 0;
@@ -67,14 +69,12 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 				threads[i].join();
 			}
 			this.resultStore = new ResultStore();
-			for (int i = 0; i < numThreads; i++) { // TODO (phil) Check thread
-													// lifetimes
+			for (int i = 0; i < numThreads; i++) { 
 				for (int j = 0; j < numThreads; j++) {
 					this.statistics.run(mcs[j].getSuccesses());
 				}
 
-				// TODO (phil) Do a unit test to see the difference between
-				// toString and what I do in terms of length
+			
 				System.out.println("MCRunner Seed0!: " + seedArray.getSeed(0));
 				System.out.println("MCRunner Seed: " + seedArray.getSeed(i));
 				System.out.println("Excecution time: " + mcs[i].getExcecutionTime());

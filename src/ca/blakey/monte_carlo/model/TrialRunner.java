@@ -1,6 +1,15 @@
 package ca.blakey.monte_carlo.model;
 
 //Copyright (c) <2015> <Phillip Blakey>
+
+/*
+ * 
+ * 
+ */
+/**
+ * @author phill_000
+ *
+ */
 public class TrialRunner {
 	private int trials = 0;
 	private double successes = 0;
@@ -8,9 +17,11 @@ public class TrialRunner {
 	private int numVars;
 	private long seed;
 	private Statistics[] trialStats;
+	private Measure nVarF;
 
-	public TrialRunner(int trialsIn, int numVarsIn, long seedIn) {
+	public TrialRunner(int trialsIn, int numVarsIn, long seedIn, Measure nVarFIn) {
 		this.trials = trialsIn;
+		this.nVarF = nVarFIn;
 		this.numVars = numVarsIn;
 		this.seed = seedIn;
 		if (numVarsIn > 1) {
@@ -41,7 +52,7 @@ public class TrialRunner {
 		return this.successes;
 	}
 
-	public void incrementSuccesses(double input) { // TODO (phil) change to sum
+	private void incrementSum(double input) { 
 		this.successes = successes + input;
 	}
 
@@ -69,7 +80,7 @@ public class TrialRunner {
 			double randomVar = numGen.getRandomNum();
 			trial.run(randomVar);
 			double oneVarValue = oneVarF.Check(randomVar);
-			this.incrementSuccesses(oneVarValue);
+			this.incrementSum(oneVarValue);
 		}
 		trial.calculuateStdDev();
 		trial.calculateVariance();
@@ -78,8 +89,13 @@ public class TrialRunner {
 		System.out.println(this);
 	}
 
-	public void runNVar(Measure nVarF) {
-		// TODO (phil) Calculate statistics on output value
+	/**
+	 * @param nVarF
+	 */
+	
+	// calls the measure function a bunhc of times supplying new 
+	// random numbers each time and collecting statistics on the output.
+	public void runNVar() { 
 		RandomNumGen numGen = new RandomNumGen(this.getSeed());
 		double[] randomVars = new double[this.getNumVars()];
 		for (int i = 1; i < this.getTrials() + 1; i++) {
@@ -89,7 +105,7 @@ public class TrialRunner {
 				this.trialStats[j].run(randomVars[j]);
 			}
 			double nVarValue = nVarF.Call(randomVars);
-			this.incrementSuccesses(nVarValue);
+			this.incrementSum(nVarValue);
 
 		}
 
