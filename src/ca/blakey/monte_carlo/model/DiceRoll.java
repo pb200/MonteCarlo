@@ -1,7 +1,22 @@
 package ca.blakey.monte_carlo.model;
-//Copyright (c) <2015> <Phillip Blakey>
+
+/**
+ * @author phill_000
+ *Copyright (c) <2015> <Phillip Blakey>
+ *
+ * The Class has two methods, Call, and PostCall. Call takes in an input of random variables, 
+ * with values between 0 and 1, in this case each representing one die. For each random 
+ * variable if statements check what value of the die was rolled. This is done by breaking
+ * up the interval 0 to 1 into 6 smaller intervals each representing one face of the die.
+ * The PostCall method takes in an input, the average sum of the die, and returns that input
+ * as an output.
+ *
+ */
 public class DiceRoll extends Measure{
 
+	/* (non-Javadoc)
+	 * @see ca.blakey.monte_carlo.model.Measure#Call(double[])
+	 */
 	@Override
 	double Call(double[] input) {
 		int [] diceValues = new int[input.length];
@@ -31,6 +46,9 @@ public class DiceRoll extends Measure{
 		return sum;
 	}
 
+	/* (non-Javadoc)
+	 * @see ca.blakey.monte_carlo.model.Measure#postCall(double)
+	 */
 	@Override
 	double postCall(double input) {
 		return input;

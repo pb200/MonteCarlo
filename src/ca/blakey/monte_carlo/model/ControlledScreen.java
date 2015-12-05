@@ -1,5 +1,8 @@
 package ca.blakey.monte_carlo.model;
 
 public interface ControlledScreen {
-	  public void setScreenParent(ScreensController screenPage); 
+	  /**
+	 * @param screenPage
+	 */
+	public void setScreenParent(ScreensController screenPage); 
 }

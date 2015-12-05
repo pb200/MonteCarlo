@@ -1,4 +1,7 @@
 package ca.blakey.monte_carlo.model;
+/*
+ * 
+ */
 import ca.blakey.monte_carlo.model.*;
 
 import static org.junit.Assert.*;

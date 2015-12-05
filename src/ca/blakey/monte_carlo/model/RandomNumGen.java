@@ -1,32 +1,37 @@
 package ca.blakey.monte_carlo.model;
 
-//Copyright (c) <2015> <Phillip Blakey>
 
 import java.util.Random;
 
 
+/**
+ * @author phill_000
+ *Copyright (c) <2015> <Phillip Blakey>
+ *
+ * This class has one methods and a constructor. The constructor takes in a seed as an 
+ * argument and creates a random number generator. The getRandomNum method uses this 
+ * random number generator to return a new random number.
+ *
+ */
 public class RandomNumGen {
 	private long seed;
 	private Random rand1;
+	/**
+	 * @param seedIn This parameter is used to create a random number generator.
+	 */
 	public RandomNumGen(Long seedIn){
 		this.seed = seedIn;
-		//System.out.println("Making random with seed " + seed);
 		this.rand1 = new Random(this.seed);
 
 	}
 
 
+	/**
+	 * @return Returns a random Double created by RandomNumGen.
+	 */
 	public double getRandomNum(){
 		double randomNum = rand1.nextDouble();
-		//System.out.println(randomNum);
 		return randomNum;
 	}
-	//public static void main(String [] args){
-		//RandomNumGen one = new RandomNumGen((long)Math.pow(2, 30));
-		//RandomNumGen two = new RandomNumGen(0L);
-		//double t11=one.getRandomNum();
-		//double t12 = one.getRandomNum();
-		//double t13 = two.getRandomNum();
-		//System.out.println(t11 + " , " + t12 + " , " + t13);
-	//}
+
 }
