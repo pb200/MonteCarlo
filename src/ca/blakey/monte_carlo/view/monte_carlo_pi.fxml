@@ -43,13 +43,13 @@
                               <HBox prefHeight="28.0" prefWidth="432.0">
                                  <children>
                                     <Label prefHeight="25.0" prefWidth="120.0" text="Number of Threads: " />
-                                    <TextField fx:id="numThreadsInput" promptText="Number of Threads" />
+                                    <TextField fx:id="numThreadsInput" text="4" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="30.0" prefWidth="311.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="120.0" text="Number of Trials: " />
-                                    <TextField fx:id="numTrialsInput" promptText="Number of Trials" />
+                                    <TextField fx:id="numTrialsInput" text="100000" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="28.0" prefWidth="311.0">

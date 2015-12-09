@@ -33,7 +33,7 @@ import javafx.concurrent.Task;
 public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	private int numThreads = 0;
 	private int numVars = 0;
-	private int numTrials = 0;
+	private long numTrials = 0;
 	private Statistics statistics;
 	private String simType;
 	GenerateUUID seedArray;
@@ -46,11 +46,11 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	 * @param simTypeIn
 	 * @throws NoSuchAlgorithmException
 	 */
-	public MCRunnerNoAWS(int numThreadsIn, int numTrialsIn, int numVarsIn, String simTypeIn)
+	public MCRunnerNoAWS(int numThreadsIn, long numTrialsIn, int numVarsIn, String simTypeIn)
 			throws NoSuchAlgorithmException {
 		this.numThreads = numThreadsIn;
 		this.numVars = numVarsIn;
-		this.numTrials = numTrialsIn;
+		this.numTrials = numTrialsIn/numThreadsIn;
 		seedArray = new GenerateUUID(numThreadsIn);
 		this.simType = simTypeIn;
 	}
@@ -59,14 +59,14 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	 * @return This method returns the number of threads that simulations were
 	 *         run on.
 	 */
-	public int getNumThreads() {
+	public long getNumThreads() {
 		return this.numThreads;
 	}
 
 	/**
 	 * @return This method returns the number of random variables.
 	 */
-	public int getNumVars() {
+	public long getNumVars() {
 		return this.numVars;
 	}
 
@@ -92,17 +92,19 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	 */
 	@Override
 	protected ObservableList<Double> call() throws Exception {
+		
 		final ObservableList<Double> results = FXCollections.<Double> observableArrayList();
 
 		Thread[] threads = new Thread[numThreads];
-		MonteCarloSim[] mcs = new MonteCarloSim[numThreads];
+		MonteCarloSim[] mcs = new MonteCarloSim[(int) numThreads];
 		this.statistics = new Statistics();
 		int numSteps = 10;
-		int trialsPerStep = numTrials / 10;
+		updateProgress(0, numSteps);
+		long trialsPerStep = numTrials / 10;
 		for (int i = 0; i < numThreads; i++) {
 			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), trialsPerStep, this.numVars, this.simType);
 		}
-		for (int stepNumber = 0; stepNumber < numSteps; stepNumber++) {
+		for (int stepNumber = 1; stepNumber < numSteps+1; stepNumber++) {
 			for (int i = 0; i < numThreads; i++) {
 				threads[i] = new Thread(mcs[i]);
 				threads[i].start();
@@ -113,9 +115,9 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 			}
 			this.resultStore = new ResultStore();
 			for (int i = 0; i < numThreads; i++) {
-				for (int j = 0; j < numThreads; j++) {
-					this.statistics.run(mcs[j].getSuccesses());
-				}
+				//for (int j = 0; j < numThreads; j++) {
+				//	this.statistics.run(mcs[i].getSuccesses());
+				//}
 
 				System.out.println("MCRunner Seed0!: " + seedArray.getSeed(0));
 				System.out.println("MCRunner Seed: " + seedArray.getSeed(i));
@@ -136,7 +138,7 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 				double tempSuccesses = result.getSuccesses();
 				successes = successes + (tempSuccesses);
 			}
-			double sum = successes / (numTrials * numThreads);
+			double sum = successes / (trialsPerStep*stepNumber * numThreads);
 
 			results.add(sum);
 			updateValue(FXCollections.<Double> unmodifiableObservableList(results));

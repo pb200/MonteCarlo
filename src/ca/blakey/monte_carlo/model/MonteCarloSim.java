@@ -1,32 +1,30 @@
 package ca.blakey.monte_carlo.model;
 
-
 import java.util.Timer;
 
-
 /**
- * @author phill_000
- *Copyright (c) <2015> <Phillip Blakey>
+ * @author phill_000 Copyright (c) <2015> <Phillip Blakey>
  *
- * This class implements the runnable interface and runs the simulation selected in the GUI.
- * The run method is described below. The run method does all the work of the class
- * as all other methods are setters or getters. 
- * The run method is an implementation of the run method in Runnable. 
- * This method simply generates an array of random variables with length equal to
- * the number of random variables, for each random variables runs some statistics, then
- * and calls the nVarF, an instance of nVariable function,
- * and increments the sum by the returned value numTrials times.
- * This method also times how long it takes to do the procedure mentioned above
- * and saves the resulting time in a private variable.
+ *         This class implements the runnable interface and runs the simulation
+ *         selected in the GUI. The run method is described below. The run
+ *         method does all the work of the class as all other methods are
+ *         setters or getters. The run method is an implementation of the run
+ *         method in Runnable. This method simply generates an array of random
+ *         variables with length equal to the number of random variables, for
+ *         each random variables runs some statistics, then and calls the nVarF,
+ *         an instance of nVariable function, and increments the sum by the
+ *         returned value numTrials times. This method also times how long it
+ *         takes to do the procedure mentioned above and saves the resulting
+ *         time in a private variable.
  *
  */
 public class MonteCarloSim implements Runnable {
 	static Timer timer = new Timer();
 	static int seconds = 0;
 	private long seed = 0;
-	private int numTrials = 0;
+	private long numTrials = 0;
 	private int numVars = 0;
-	private double totalExecutionTime = 0;
+	private double totalExecutionTime = 0.0;
 	private double[] standardDeviation;
 	private double[] varience;
 	private double[] mean;
@@ -36,6 +34,7 @@ public class MonteCarloSim implements Runnable {
 	private Measure nVarF;
 	private Statistics[] trialStats;
 	private double sum = 0;
+	private RandomNumGen numGen;
 
 	/**
 	 * @param seedIn
@@ -53,7 +52,7 @@ public class MonteCarloSim implements Runnable {
 	 *            The constructor sets the private variables of the class to the
 	 *            input paramters listed above.
 	 */
-	public MonteCarloSim(long seedIn, int trialsIn, int numVarsIn, String simulationTypeIn) {
+	public MonteCarloSim(long seedIn, long trialsIn, int numVarsIn, String simulationTypeIn) {
 
 		this.seed = seedIn;
 		this.simulationType = simulationTypeIn;
@@ -62,13 +61,13 @@ public class MonteCarloSim implements Runnable {
 		standardDeviation = new double[numVarsIn];
 		varience = new double[numVarsIn];
 		mean = new double[numVarsIn];
-
+		numGen = new RandomNumGen(this.seed);
 		if (simulationType.compareTo("diceRoll") == 0) {
 			nVarF = new DiceRoll();
 		} else {
 			nVarF = new PiRoll();
 		}
-		trialStats = new Statistics[numVars];
+		trialStats = new Statistics[(int) numVars];
 		for (int j = 0; j < numVars; j++) {
 			trialStats[j] = new Statistics();
 		}
@@ -118,7 +117,7 @@ public class MonteCarloSim implements Runnable {
 	 *         run for.
 	 * 
 	 */
-	public int getNumTrials() {
+	public long getNumTrials() {
 		return this.numTrials;
 	}
 
@@ -134,46 +133,30 @@ public class MonteCarloSim implements Runnable {
 	}
 
 	// See description at the beginning of the class.
+	// This is what is called by MCRunner for each thread.
 	public void run() {
 		{
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException ie) {
-				System.err.println("Interrupted");
-				return;
-			}
-			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
-			final long startTime = System.currentTimeMillis();
 
-			RandomNumGen numGen = new RandomNumGen(this.seed);
-			double[] randomVars = new double[this.numVars];
+			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
+		
+			double[] randomVars = new double[(int)this.numVars];
+			final long startTime = System.nanoTime();
+
 			for (int i = 1; i < this.numTrials + 1; i++) {
-				 for (int j = 0; j < this.numVars; j++) {
-				 double randomVar = numGen.getRandomNum();
-				 randomVars[j] = randomVar;
-				 this.trialStats[j].run(randomVars[j]);
-				 }
+				for (int j = 0; j < this.numVars; j++) {
+					double randomVar = numGen.getRandomNum();
+					randomVars[j] = randomVar;
+					this.trialStats[j].run(randomVars[j]);
+				}
 				double nVarValue = nVarF.Call(randomVars);
 				this.incrementSum(nVarValue);
-				System.out.println("Sum: " + sum);
 			}
 
-			/*
-			 * for (int j = 0; j < tRunner.getNumVars(); j++) {
-			 * tRunner.getTrialStat(j).calculuateStdDev();
-			 * tRunner.getTrialStat(j).calculateVariance();
-			 * tRunner.getTrialStat(j).calculateMean();
-			 * this.standardDeviation[j] =
-			 * tRunner.getTrialStat(j).getStandardDev(); this.varience[j] =
-			 * tRunner.getTrialStat(j).getVariance(); this.mean[j] =
-			 * tRunner.getTrialStat(j).getMean(); }
-			 */
-
-			final long endTime = System.currentTimeMillis();
+			final long endTime = System.nanoTime();
 			this.totalExecutionTime = endTime - startTime;
+			System.out.println(startTime +", " + endTime);
 			this.endTime = endTime;
 			this.successes = nVarF.postCall(this.sum);
-
 		}
 	}
 }

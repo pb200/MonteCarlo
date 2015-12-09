@@ -30,7 +30,7 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 	ScreensController myController;
 
 	private int numThreads = 0;
-	private int numTrials = 0;
+	private long numTrials = 0;
 	private double pi;
 
 	@FXML
@@ -102,7 +102,7 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 	 */
 	public void setNumTrialsClicked() {
 		try {
-			numTrials = Integer.parseInt(numTrialsInput.getText());
+			numTrials = Long.parseLong(numTrialsInput.getText());
 			// currentNumTrials.setText(numTrialsInput.getText());
 			System.out.println(numTrials);
 		} catch (NumberFormatException e) {
@@ -128,9 +128,21 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 		try {
 			setNumTrialsClicked();
 			setNumThreadsClicked();
+			if(numTrials <1){
+				throw new NumberFormatException();
+			}
+			if(numThreads < 1){
+				throw new NumberFormatException();
+			}
+			if(numThreads > 8){
+				throw new Exception();
+			}
 		} catch (NumberFormatException e) {
-
 			return;
+		}
+		catch(Exception e){
+			StatusLabel.setText("That is too many threads!!");
+			StatusLabel.setFill(Color.FIREBRICK);
 		}
 		MCRunnerNoAWS mCRunner = new MCRunnerNoAWS(numThreads, numTrials, 2, "piSimulation");
 		valueOfPi.textProperty().bind(mCRunner.valueProperty().asString());

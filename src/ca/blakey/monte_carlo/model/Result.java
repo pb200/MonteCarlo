@@ -18,7 +18,7 @@ public class Result {
 	private double time;
 	private double executionTime;
 	private int successes;
-	private int trials;
+	private long trials;
 
 	/**
 	 * @param seedIn
@@ -32,7 +32,7 @@ public class Result {
 	 */
 	public Result(long seedIn, double meanIn, double stdIn,
 			double varianceIn, double timeIn, double excecutionTimeIn,
-			int successesIn, int trialsIn){
+			int successesIn, long trialsIn){
 
 		this.seed = seedIn;
 		this.mean = meanIn;

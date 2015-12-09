@@ -29,8 +29,8 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	ScreensController myController;
 
 	private int numThreads = 0;
-	private int numTrials = 0;
-	private int numDice;
+	private long numTrials = 0;
+	private int numDice = 0;
 	
 	@FXML
 	private VBox DiceVBox;
@@ -77,6 +77,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	 */
 	public void setNumThreadsClickedDice() {
 		try {
+		
 			numThreads = Integer.parseInt(numThreadsInDice.getText());
 			// numThreadsDice.setText(numThreadsInDice.getText());
 		} catch (NumberFormatException e) {
@@ -94,8 +95,10 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	 */
 	public void setNumTrialsClickedDice() {
 		try {
-			numTrials = Integer.parseInt(numTrialsInDice.getText());
+			
+			numTrials = Long.parseLong(numTrialsInDice.getText());
 			// numTrialsDice.setText(numTrialsInDice.getText());
+			
 			System.out.println(numTrials);
 		} catch (NumberFormatException e) {
 			statusLabelDice.setText("Please enter an integer");
@@ -112,6 +115,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	 */
 	public void setNumDiceClickedDice() {
 		try {
+			
 			numDice = Integer.parseInt(numDiceInDice.getText());
 			// numDiceDice.setText(numDiceInDice.getText());
 		} catch (NumberFormatException e) {
@@ -132,9 +136,19 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	 */
 	public void simulateDiceClicked() throws Exception {
 		try {
+			
 			setNumTrialsClickedDice();
 			setNumThreadsClickedDice();
 			setNumDiceClickedDice();
+			if(numThreads <1){
+				throw new NumberFormatException();
+			}
+			if(numTrials <1){
+				throw new NumberFormatException();
+			}
+			if(numDice <1){
+				throw new NumberFormatException();
+			}
 		} catch (NumberFormatException e) {
 			return;
 		}
