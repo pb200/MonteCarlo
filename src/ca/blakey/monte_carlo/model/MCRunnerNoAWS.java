@@ -2,6 +2,7 @@ package ca.blakey.monte_carlo.model;
 
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,7 +94,8 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	@Override
 	protected ObservableList<Double> call() throws Exception {
 		
-		final ObservableList<Double> results = FXCollections.<Double> observableArrayList();
+		final ObservableList<Double>  results = FXCollections.<Double > observableArrayList();
+		final ObservableList<Double>  stdDevResults = FXCollections.<Double > observableArrayList();
 
 		Thread[] threads = new Thread[numThreads];
 		MonteCarloSim[] mcs = new MonteCarloSim[(int) numThreads];
@@ -105,6 +107,9 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 			mcs[i] = new MonteCarloSim(seedArray.getSeed(i), trialsPerStep, this.numVars, this.simType);
 		}
 		for (int stepNumber = 1; stepNumber < numSteps+1; stepNumber++) {
+			if(this.isCancelled()){
+				break;
+			}
 			for (int i = 0; i < numThreads; i++) {
 				threads[i] = new Thread(mcs[i]);
 				threads[i].start();
@@ -138,13 +143,30 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 				double tempSuccesses = result.getSuccesses();
 				successes = successes + (tempSuccesses);
 			}
-			double sum = successes / (trialsPerStep*stepNumber * numThreads);
-
+			double sum = 0;
+			if(simType.compareTo("buffinRoll") == 0){
+				 sum = (trialsPerStep*stepNumber*2*numThreads)/(successes);
+			}
+			else{
+			 sum = successes / (trialsPerStep*stepNumber * numThreads);
+			}
+			ArrayList<Double> tempValuesArray = new ArrayList<Double>();
+			tempValuesArray.add(sum);
+			tempValuesArray.add(this.statistics.getStandardDev());
+			tempValuesArray.add(this.statistics.getMaxValue());
+			tempValuesArray.add(this.statistics.getMinValue());
+			
 			results.add(sum);
+			stdDevResults.add(this.statistics.getStandardDev());
+			
 			updateValue(FXCollections.<Double> unmodifiableObservableList(results));
 			updateProgress(stepNumber + 1, numSteps);
+		
+			
 		}
 		return results;
 	}
-
+protected void cancelled() {
+	super.cancelled();
+}
 }

@@ -18,6 +18,8 @@ public class Main extends Application {
 	public static String screen2File = "/ca/blakey/monte_carlo/view/monte_carlo_dice.fxml";
 	public static String screen3ID = "screen3";
 	public static String screen3File = "/ca/blakey/monte_carlo/view/monte_carlo_pi.fxml";
+	public static String screen4ID = "screen4";
+	public static String screen4File = "/ca/blakey/monte_carlo/view/monte_carlo_buffin.fxml";
 
 	public static void main(String[] args) {
 		launch(args);
@@ -30,6 +32,7 @@ public class Main extends Application {
 		mainContainer.loadScreen(Main.mainPageName, Main.mainPageFxmlPath);
 		mainContainer.loadScreen(Main.screen2ID, Main.screen2File);
 		mainContainer.loadScreen(Main.screen3ID, Main.screen3File);
+		mainContainer.loadScreen(Main.screen4ID, Main.screen4File);
 
 		mainContainer.setScreen(Main.mainPageName);
 

@@ -30,7 +30,7 @@ import ca.blakey.monte_carlo.model.ScreensController;
  *         interacts with the GUI for the Pi calculation Simulation.
  * 
  */
-public class Controller_Pi implements Initializable, ControlledScreen {
+public class Controller_Buffin implements Initializable, ControlledScreen {
 
 	ScreensController myController;
 
@@ -70,8 +70,6 @@ public class Controller_Pi implements Initializable, ControlledScreen {
     private Text threadStatusLabel;
     @FXML
     private Text trialStatusLabel;
-    @FXML
-    private Text standardDeviationValue;
 
 	private boolean inputError;
 	/*
@@ -141,7 +139,6 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 		alert.setContentText(s);
 		alert.show();
 	}
-
 	public void reset(){
 		inputError = false;
 		if(statusLabel.textProperty().isBound() == true){
@@ -216,17 +213,15 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 		return;
 	}
 		statusLabel.setFill(Color.GREEN);
-		MCRunnerNoAWS mCRunner = new MCRunnerNoAWS(numThreads, numTrials, 2, "piRoll");
+		MCRunnerNoAWS mCRunner = new MCRunnerNoAWS(numThreads, numTrials, 4, "buffinRoll");
 		cancelBtn.setOnAction(e -> mCRunner.cancel());
 		cancelBtn.disabledProperty().and(mCRunner.stateProperty().isNotEqualTo(RUNNING));
 		valueOfPi.textProperty().bind(mCRunner.valueProperty().asString());
-		standardDeviationValue.textProperty().bind(mCRunner.valueProperty().asString());
 		piProgressBar.progressProperty().bind(mCRunner.progressProperty());
 		Thread workingThread = new Thread(mCRunner);
 		workingThread.setDaemon(true);
 		workingThread.start();
 		statusLabel.textProperty().bind(mCRunner.stateProperty().asString());
-
 	}
 
 	/*

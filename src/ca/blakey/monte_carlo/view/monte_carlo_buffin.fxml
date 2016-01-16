@@ -8,10 +8,10 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.blakey.monte_carlo.model.Controller_Pi">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.blakey.monte_carlo.model.Controller_Buffin">
    <children>
       <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
-      <ToolBar prefHeight="6.0" prefWidth="620.0">
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button mnemonicParsing="false" onAction="#descriptionDialogClicked" text="Information" />
         </items>
@@ -55,12 +55,6 @@
                                     <Text fx:id="valueOfPi" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" />
                                  </children>
                               </HBox>
-                              <HBox layoutX="10.0" layoutY="120.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Standard Deviation:" wrappingWidth="109.13671875" />
-                                    <Text fx:id="standardDeviationValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="511.13671875" />
-                                 </children>
-                              </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <VBox prefHeight="46.0" prefWidth="415.0">
@@ -69,6 +63,7 @@
                                              <children>
                                                 <Label prefHeight="17.0" prefWidth="53.0" text="Progress" />
                                                 <ProgressBar fx:id="piProgressBar" prefWidth="200.0" progress="0.0" />
+                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Statistics" />
                                              </children>
                                           </HBox>
                                           <HBox />

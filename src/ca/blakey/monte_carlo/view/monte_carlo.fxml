@@ -11,34 +11,20 @@
    <children>
       <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="603.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+            <ToolBar prefHeight="35.0" prefWidth="614.0">
+              <items>
+                <Button mnemonicParsing="false" text="Information" />
+              </items>
+            </ToolBar>
          </children>
       </HBox>
       <BorderPane VBox.vgrow="ALWAYS">
          <bottom>
             <HBox prefHeight="281.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                  <ScrollPane prefHeight="281.0" prefWidth="185.0">
                      <content>
-                        <VBox prefHeight="372.0" prefWidth="170.0">
+                        <VBox prefHeight="398.0" prefWidth="170.0">
                            <children>
                               <HBox prefHeight="26.0" prefWidth="170.0">
                                  <children>
@@ -46,6 +32,7 @@
                                  </children>
                               </HBox>
                               <Button mnemonicParsing="false" onAction="#setDiceSimVisible" prefHeight="25.0" prefWidth="171.0" text="Dice Simulation" />
+                              <Button mnemonicParsing="false" onAction="#setBuffinSimVisible" prefHeight="25.0" prefWidth="191.0" text="Buffin's Needle Simulation" />
                            </children>
                         </VBox>
                      </content>
@@ -54,15 +41,24 @@
             </HBox>
          </bottom>
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox>
                <children>
-                  <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
+                  <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
+                           <font>
+                              <Font name="Britannic Bold" size="37.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label prefHeight="17.0" prefWidth="184.0" text="Simulations">
                      <font>
-                        <Font name="Britannic Bold" size="37.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                </children>
-            </HBox>
+            </VBox>
          </top>
       </BorderPane>
    </children>

@@ -55,4 +55,8 @@ public class MainScreenController implements Initializable, ControlledScreen {
 	public void setPiSimVisible(){
 		 myController.setScreen(Main.screen3ID);
 	}
+	@FXML
+	public void setBuffinSimVisible(){
+		myController.setScreen(Main.screen4ID);
+	}
 }

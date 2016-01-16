@@ -7,7 +7,7 @@ import java.util.Timer;
  *
  *         This class implements the runnable interface and runs the simulation
  *         selected in the GUI. The run method is described below. The run
- *         method does all the work of the class as all other methods are
+ *         method does the main part of the work of the class as all other methods are
  *         setters or getters. The run method is an implementation of the run
  *         method in Runnable. This method simply generates an array of random
  *         variables with length equal to the number of random variables, for
@@ -25,9 +25,6 @@ public class MonteCarloSim implements Runnable {
 	private long numTrials = 0;
 	private int numVars = 0;
 	private double totalExecutionTime = 0.0;
-	private double[] standardDeviation;
-	private double[] varience;
-	private double[] mean;
 	private double endTime = 0;
 	private double successes = 0;
 	private String simulationType;
@@ -58,14 +55,18 @@ public class MonteCarloSim implements Runnable {
 		this.simulationType = simulationTypeIn;
 		this.numTrials = trialsIn;
 		this.numVars = numVarsIn;
-		standardDeviation = new double[numVarsIn];
-		varience = new double[numVarsIn];
-		mean = new double[numVarsIn];
+		// standardDeviation = new double[numVarsIn];
+		// varience = new double[numVarsIn];
+		// mean = new double[numVarsIn];
 		numGen = new RandomNumGen(this.seed);
 		if (simulationType.compareTo("diceRoll") == 0) {
 			nVarF = new DiceRoll();
-		} else {
+		} 
+		else if(simulationType.compareTo("piRoll")==0) {
 			nVarF = new PiRoll();
+		}
+		else{
+			nVarF = new BuffinRoll();
 		}
 		trialStats = new Statistics[(int) numVars];
 		for (int j = 0; j < numVars; j++) {
@@ -73,13 +74,6 @@ public class MonteCarloSim implements Runnable {
 		}
 	}
 
-	/*
-	 * public double[] getStdArray() { return this.standardDeviation; }
-	 * 
-	 * public double[] getMeanArray() { return this.mean; }
-	 * 
-	 * public double[] getVarienceArray() { return this.varience; }
-	 */
 	/**
 	 * @return This method returns the time the run method ends (The run method
 	 *         is below).
@@ -138,8 +132,8 @@ public class MonteCarloSim implements Runnable {
 		{
 
 			System.out.println("Thread ID " + Thread.currentThread().getId() + " running");
-		
-			double[] randomVars = new double[(int)this.numVars];
+
+			double[] randomVars = new double[(int) this.numVars];
 			final long startTime = System.nanoTime();
 
 			for (int i = 1; i < this.numTrials + 1; i++) {
@@ -154,7 +148,7 @@ public class MonteCarloSim implements Runnable {
 
 			final long endTime = System.nanoTime();
 			this.totalExecutionTime = endTime - startTime;
-			System.out.println(startTime +", " + endTime);
+			System.out.println(startTime + ", " + endTime);
 			this.endTime = endTime;
 			this.successes = nVarF.postCall(this.sum);
 		}
