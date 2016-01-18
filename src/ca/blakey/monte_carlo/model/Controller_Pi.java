@@ -220,7 +220,7 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 		cancelBtn.setOnAction(e -> mCRunner.cancel());
 		cancelBtn.disabledProperty().and(mCRunner.stateProperty().isNotEqualTo(RUNNING));
 		valueOfPi.textProperty().bind(mCRunner.valueProperty().asString());
-		standardDeviationValue.textProperty().bind(mCRunner.valueProperty().asString());
+		standardDeviationValue.textProperty().bind((mCRunner.standardDevProperty.asString()));
 		piProgressBar.progressProperty().bind(mCRunner.progressProperty());
 		Thread workingThread = new Thread(mCRunner);
 		workingThread.setDaemon(true);

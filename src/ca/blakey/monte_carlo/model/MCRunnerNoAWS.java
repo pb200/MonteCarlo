@@ -4,6 +4,10 @@ package ca.blakey.monte_carlo.model;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -40,6 +44,7 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	GenerateUUID seedArray;
 	ResultStore resultStore;
 
+	public DoubleProperty standardDevProperty = new SimpleDoubleProperty(0);
 	/**
 	 * @param numThreadsIn
 	 * @param numTrialsIn
@@ -49,6 +54,7 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	 */
 	public MCRunnerNoAWS(int numThreadsIn, long numTrialsIn, int numVarsIn, String simTypeIn)
 			throws NoSuchAlgorithmException {
+		//this.standardDevProperty = new DoubleProperty(this, "standardDev", 0);
 		this.numThreads = numThreadsIn;
 		this.numVars = numVarsIn;
 		this.numTrials = numTrialsIn/numThreadsIn;
@@ -95,7 +101,7 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 	protected ObservableList<Double> call() throws Exception {
 		
 		final ObservableList<Double>  results = FXCollections.<Double > observableArrayList();
-		final ObservableList<Double>  stdDevResults = FXCollections.<Double > observableArrayList();
+		final ObservableList<Double>  standardDeviation = FXCollections.<Double > observableArrayList();
 
 		Thread[] threads = new Thread[numThreads];
 		MonteCarloSim[] mcs = new MonteCarloSim[(int) numThreads];
@@ -120,14 +126,10 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 			}
 			this.resultStore = new ResultStore();
 			for (int i = 0; i < numThreads; i++) {
-				//for (int j = 0; j < numThreads; j++) {
-				//	this.statistics.run(mcs[i].getSuccesses());
-				//}
+				for (int j = 0; j < numThreads; j++) {
+					this.statistics.run(mcs[i].getSuccesses());
+				}
 
-				System.out.println("MCRunner Seed0!: " + seedArray.getSeed(0));
-				System.out.println("MCRunner Seed: " + seedArray.getSeed(i));
-				System.out.println("Excecution time: " + mcs[i].getExcecutionTime());
-				System.out.println("End time: " + mcs[i].getEndTime());
 				Result result = new Result(seedArray.getSeed(i), this.statistics.getMean(),
 						this.statistics.getStandardDev(), this.statistics.getVariance(), mcs[i].getEndTime(),
 						mcs[i].getExcecutionTime(), (int) mcs[i].getSuccesses(), mcs[i].getNumTrials());
@@ -150,15 +152,10 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 			else{
 			 sum = successes / (trialsPerStep*stepNumber * numThreads);
 			}
-			ArrayList<Double> tempValuesArray = new ArrayList<Double>();
-			tempValuesArray.add(sum);
-			tempValuesArray.add(this.statistics.getStandardDev());
-			tempValuesArray.add(this.statistics.getMaxValue());
-			tempValuesArray.add(this.statistics.getMinValue());
-			
+
 			results.add(sum);
-			stdDevResults.add(this.statistics.getStandardDev());
-			
+			this.standardDevProperty.setValue(this.statistics.getStandardDev());
+			System.out.println(this.statistics.getStandardDev()+ " THS IS STD");
 			updateValue(FXCollections.<Double> unmodifiableObservableList(results));
 			updateProgress(stepNumber + 1, numSteps);
 		
@@ -169,4 +166,5 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 protected void cancelled() {
 	super.cancelled();
 }
+
 }

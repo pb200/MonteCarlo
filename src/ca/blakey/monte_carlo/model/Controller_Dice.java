@@ -189,9 +189,11 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 				}
 				else{
 					threadStatusLabelDice.setText("The number of threads must be a whole number, and at least one.");
+					threadStatusLabelDice.setFill(Color.FIREBRICK);
 				}
 			}
 			if(numThreads > 1000){
+				if(threadStatusLabelDice.getText() == ""){
 				this.inputError = true;
 				threadStatusLabelDice.setText("The number of threads must be at less than 1000.");
 				threadStatusLabelDice.setFill(Color.FIREBRICK);
@@ -199,6 +201,8 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 			}
 			else{
 				threadStatusLabelDice.setText("The number of threads must be a whole number, and less than 1000.");
+				threadStatusLabelDice.setFill(Color.FIREBRICK);
+			}
 			}
 			if(numTrials <10){
 	
