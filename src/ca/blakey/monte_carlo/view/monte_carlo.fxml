@@ -11,11 +11,7 @@
    <children>
       <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <ToolBar prefHeight="35.0" prefWidth="614.0">
-              <items>
-                <Button mnemonicParsing="false" text="Information" />
-              </items>
-            </ToolBar>
+            <ToolBar prefHeight="35.0" prefWidth="614.0" />
          </children>
       </HBox>
       <BorderPane VBox.vgrow="ALWAYS">

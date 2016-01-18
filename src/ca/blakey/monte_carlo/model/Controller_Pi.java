@@ -92,6 +92,8 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 	@FXML
 	public void backToMain() {
 		this.reset();
+		numThreadsInput.setText("4");
+		numTrialsInput.setText("100000");
 		myController.setScreen(Main.mainPageName);
 	}
 
@@ -137,7 +139,14 @@ public class Controller_Pi implements Initializable, ControlledScreen {
         String titleTxt="HELLO";
 		alert.setTitle(titleTxt);
 		alert.setHeaderText("Dice simulation");
-		String s = "This calculates the value of pi using monte carlo methods";
+		String s = "This simulation calculates the value of pi using Monte Carlo methods."
+				+ " It uses   It checks if the coordinates of the circle is within a circle."
+				+ " If the coordinates are within the circle it returns a 1.If the value is outside "
+				+ "it will return a 0. There is a class that is called PiRoll that implements a "
+				+ "abstract class called measure. "
+				+ "The call method is used to return the value of 0 and 1. "
+				+ "The sum of the call methods will be divided by trials, "
+				+ "then post call method is used to give the value of pi by multiplying it by 4.";
 		alert.setContentText(s);
 		alert.show();
 	}
@@ -148,12 +157,14 @@ public class Controller_Pi implements Initializable, ControlledScreen {
 			statusLabel.textProperty().unbind();
 			valueOfPi.textProperty().unbind();
 			piProgressBar.progressProperty().unbind();
+			standardDeviationValue.textProperty().unbind();
 			}
 		statusLabel.setText("");
 		valueOfPi.setText("");
 		piProgressBar.setProgress(0.0);
 		trialStatusLabel.setText("");
 		threadStatusLabel.setText("");
+		standardDeviationValue.setText("");
 	}
 	/**
 	 * @throws Exception

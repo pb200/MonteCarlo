@@ -155,7 +155,6 @@ public class MCRunnerNoAWS extends Task<ObservableList<Double>> {
 
 			results.add(sum);
 			this.standardDevProperty.setValue(this.statistics.getStandardDev());
-			System.out.println(this.statistics.getStandardDev()+ " THS IS STD");
 			updateValue(FXCollections.<Double> unmodifiableObservableList(results));
 			updateProgress(stepNumber + 1, numSteps);
 		

@@ -51,8 +51,14 @@
                               </Text>
                               <HBox>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Value of Pi:" wrappingWidth="70.13671875" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estimate of Pi:" wrappingWidth="87.13671875" />
                                     <Text fx:id="valueOfPi" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="120.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Standard Deviation" wrappingWidth="115.13671875" />
+                                    <Text fx:id="standardDeviationValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="292.13671875" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
@@ -63,7 +69,6 @@
                                              <children>
                                                 <Label prefHeight="17.0" prefWidth="53.0" text="Progress" />
                                                 <ProgressBar fx:id="piProgressBar" prefWidth="200.0" progress="0.0" />
-                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Statistics" />
                                              </children>
                                           </HBox>
                                           <HBox />
@@ -80,15 +85,28 @@
             </HBox>
          </bottom>
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox>
                <children>
-                  <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
-                     <font>
-                        <Font name="Britannic Bold" size="37.0" />
-                     </font>
-                  </Label>
+                  <HBox BorderPane.alignment="CENTER">
+                     <children>
+                        <Label prefHeight="67.0" prefWidth="422.0" text="Monte Carlo Engine">
+                           <font>
+                              <Font name="Britannic Bold" size="37.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="600.0">
+                     <children>
+                        <Label prefHeight="29.0" prefWidth="422.0" text="Buffins Needle Simulation">
+                           <font>
+                              <Font name="Britannic Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </top>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -65,7 +65,8 @@ public class Controller_Dice implements Initializable, ControlledScreen {
     private Text trialStatusLabelDice;
     @FXML
     private Text threadStatusLabelDice;
-    
+    @FXML
+    private Text standardDeviationValue;
 
 
 	private boolean inputError = false;
@@ -84,6 +85,9 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 	@FXML
 	public void backToMain() {
 		this.reset();
+		numThreadsInDice.setText("4");
+		numTrialsInDice.setText("100000");
+		numDiceInDice.setText("2");
 		myController.setScreen(Main.mainPageName);
 	}
 
@@ -143,7 +147,11 @@ public class Controller_Dice implements Initializable, ControlledScreen {
         String titleTxt="Dice simulation";
 		alert.setTitle(titleTxt);
 		alert.setHeaderText("dice simulation");
-		String s = " Calculates the adverage of a certian number of  dice ";
+		String s = " This dice simulation uses the array of randomly generated values to return a "
+				+ "value on a six sided dice in the call method. It then will calculate the average"
+				+ " sum of the the dice. A random number between 0 and 1 will be scaled up to a number "
+				+ "from 1 to 6.  The average sum of the dice is calculated every time a thread is "
+				+ "initialized.";
 		alert.setContentText(s);
 		alert.show();
 
@@ -154,6 +162,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 		statusLabelDice.textProperty().unbind();
 		avgSum.textProperty().unbind();
 		diceProgressBar.progressProperty().unbind();
+		standardDeviationValue.textProperty().unbind();
 		}
 		statusLabelDice.setText("");
 		avgSum.setText("");
@@ -161,6 +170,10 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 		trialStatusLabelDice.setText("");
 		threadStatusLabelDice.setText("");
 		diceStatusLabelDice.setText("");
+		standardDeviationValue.setText("");
+		
+		
+		
 	}
 	/**
 	 * @throws Exception 
@@ -239,6 +252,7 @@ public class Controller_Dice implements Initializable, ControlledScreen {
 		cancelBtn.disabledProperty().and(mCRunner.stateProperty().isNotEqualTo(RUNNING));
 		diceProgressBar.progressProperty().bind(mCRunner.progressProperty());
 		avgSum.textProperty().bind(mCRunner.valueProperty().asString());
+		standardDeviationValue.textProperty().bind((mCRunner.standardDevProperty.asString()));
 		Thread workingThread = new Thread(mCRunner);
 		workingThread.setDaemon(true);
 		workingThread.start();

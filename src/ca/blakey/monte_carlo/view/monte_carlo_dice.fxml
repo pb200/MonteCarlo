@@ -10,29 +10,12 @@
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.blakey.monte_carlo.model.Controller_Dice">
    <children>
-      <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
-         <children>
-            <MenuBar prefHeight="25.0" prefWidth="603.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </HBox>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="descriptionDialogClicked" mnemonicParsing="false" text="Information" />
+        </items>
+      </ToolBar>
+      <HBox prefHeight="0.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
       <BorderPane VBox.vgrow="ALWAYS">
          <bottom>
             <HBox prefHeight="281.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -85,6 +68,12 @@
                                     <Text fx:id="avgSum" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="235.0" />
                                  </children>
                               </HBox>
+                              <HBox layoutX="10.0" layoutY="134.0" prefHeight="0.0" prefWidth="405.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Standard Deviation: " wrappingWidth="136.13671875" />
+                                    <Text fx:id="standardDeviationValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="235.0" />
+                                 </children>
+                              </HBox>
                               <ProgressBar fx:id="diceProgressBar" prefWidth="200.0" progress="0.0" />
                               <Button mnemonicParsing="false" onAction="#backToMain" text="Return Home" />
                            </children>
@@ -95,15 +84,28 @@
             </HBox>
          </bottom>
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox>
                <children>
-                  <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
-                     <font>
-                        <Font name="Britannic Bold" size="37.0" />
-                     </font>
-                  </Label>
+                  <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label prefHeight="88.0" prefWidth="422.0" text="Monte Carlo Engine">
+                           <font>
+                              <Font name="Britannic Bold" size="37.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Label text="Dice Roll Simulation">
+                           <font>
+                              <Font name="Britannic Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </top>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

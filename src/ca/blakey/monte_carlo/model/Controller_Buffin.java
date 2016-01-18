@@ -70,7 +70,8 @@ public class Controller_Buffin implements Initializable, ControlledScreen {
     private Text threadStatusLabel;
     @FXML
     private Text trialStatusLabel;
-
+    @FXML
+    private Text standardDeviationValue;
 	private boolean inputError;
 	/*
 	 * (non-Javadoc)
@@ -90,6 +91,8 @@ public class Controller_Buffin implements Initializable, ControlledScreen {
 	@FXML
 	public void backToMain() {
 		this.reset();
+		numThreadsInput.setText("4");
+		numTrialsInput.setText("100000");
 		myController.setScreen(Main.mainPageName);
 	}
 
@@ -135,7 +138,13 @@ public class Controller_Buffin implements Initializable, ControlledScreen {
         String titleTxt="HELLO";
 		alert.setTitle(titleTxt);
 		alert.setHeaderText("Dice simulation");
-		String s = "This calculates the value of pi using monte carlo methods";
+		String s = "This caThe Buffon needle simulation calculates pi by dropping needles on lines. "
+				+ "It sets 2 lines (1 and 0) and one in the middle of the lines. "
+				+ "The line in the middle determines if the needles cross."
+				+ " If the needle crosses the lines the y values will"
+				+ " round to different numbers (0 or 1). "
+				+ " The value of pi can be determined by multiplying the trials by 2 and "
+				+ "is divided the crosses.";
 		alert.setContentText(s);
 		alert.show();
 	}
@@ -145,12 +154,14 @@ public class Controller_Buffin implements Initializable, ControlledScreen {
 			statusLabel.textProperty().unbind();
 			valueOfPi.textProperty().unbind();
 			piProgressBar.progressProperty().unbind();
+			standardDeviationValue.textProperty().unbind();
 			}
 		statusLabel.setText("");
 		valueOfPi.setText("");
 		piProgressBar.setProgress(0.0);
 		trialStatusLabel.setText("");
 		threadStatusLabel.setText("");
+		standardDeviationValue.setText("");
 	}
 	/**
 	 * @throws Exception
@@ -217,6 +228,7 @@ public class Controller_Buffin implements Initializable, ControlledScreen {
 		cancelBtn.setOnAction(e -> mCRunner.cancel());
 		cancelBtn.disabledProperty().and(mCRunner.stateProperty().isNotEqualTo(RUNNING));
 		valueOfPi.textProperty().bind(mCRunner.valueProperty().asString());
+		standardDeviationValue.textProperty().bind((mCRunner.standardDevProperty.asString()));
 		piProgressBar.progressProperty().bind(mCRunner.progressProperty());
 		Thread workingThread = new Thread(mCRunner);
 		workingThread.setDaemon(true);
